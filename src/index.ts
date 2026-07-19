@@ -16,6 +16,7 @@ import type { HTTPMethod, MagmaMiddleware, MagmaContext, MagmaNext, RequestParam
 
 type DefaultHTTPResponse = ServerResponse<IncomingMessage> & {
     req: IncomingMessage;
+    id?: number;
 }
 
 type HTTPServerInstance = Server<typeof IncomingMessage, typeof ServerResponse>
@@ -112,6 +113,7 @@ export default class Magma extends MahameruPlugin<MagmaOptions> {
     protected container: Container;
     protected route: Route;
     protected _favicon?: any;
+    protected request: Map<number, number> = new Map();
 
     constructor(options: Partial<MagmaOptions>) {
         super({ ...defaultOptions, ...options });
@@ -208,7 +210,11 @@ export default class Magma extends MahameruPlugin<MagmaOptions> {
         return httpServer;
     }
 
-    protected async handleRequest(request: IncomingMessage, response: ServerResponse<IncomingMessage> & { req: IncomingMessage; }) {
+    protected async handleRequest(request: IncomingMessage, response: DefaultHTTPResponse) {
+        const startTime = Date.now();
+        const requestID = this.request.size + 1;
+        this.request.set(requestID, startTime);
+        response.id = requestID;
         const magmaRequest = new MagmaRequest(request);
         const rawReqPath = magmaRequest.url.split('?')[0] || '/';
         const rawReqUrl = rawReqPath.replace(/\/+/g, '/');
@@ -600,7 +606,21 @@ export default class Magma extends MahameruPlugin<MagmaOptions> {
     }
 
     protected requestLogger(response: DefaultHTTPResponse) {
-        this.logger.info(response.req.method, response.statusCode, response.req.url);
+        if (!this._options.debug && this._options.dev!)
+            return;
+
+        if (response.id) {
+            const startTime = this.request.get(response.id)
+
+            if (!startTime)
+                return this.logger.info(response.req.method, response.statusCode, response.req.url);
+
+            const requestDuration = Date.now() - startTime;
+
+            this.logger.info(response.req.method, response.statusCode, response.req.url, requestDuration, 'ms');
+        } else {
+            this.logger.info(response.req.method, response.statusCode, response.req.url);
+        }
     }
 }
 
