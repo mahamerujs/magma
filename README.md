@@ -1,63 +1,28 @@
-# @mahameru/magma
+# 🚨 Project Has Moved
 
-> The official core HTTP server engine for Mahameru JS. Magma provides a lightweight, blazing-fast, and robust routing system built exclusively for the Mahameru ecosystem.
-
-⚠️ **WARNING: UNDER ACTIVE DEVELOPMENT**  
-This plugin is currently in its early development phase (**v0.x.x**). **Breaking changes and frequent public API updates will occur** as we stabilize the core logic. Use in production at your own risk.
+This repository has been moved to a new location and is no longer being maintained here. Please visit the new repository for the latest code, issues, and pull requests.
 
 ---
 
-## ⚡ Features (Under Development)
+### 🚀 A Quick Update & Thank You!
 
-* **Mahameru Native:** Designed from the ground up to integrate seamlessly with Mahameru JS core.
-* **Folder-Based Routing:** Intuitively map your file and directory structures directly into HTTP endpoints.
-* **Lightweight & Modular:** Zero unnecessary dependencies, keeping your Mahameru apps lean.
-* **Extensible Middleware:** Simple pipeline setup to intercept requests and responses at any folder level.
+We are absolutely thrilled that **MahameruJS** is growing so rapidly and evolving exactly the way we envisioned. 
 
-## 🚀 Quick Start (Experimental)
+Because of this amazing momentum, we are excited to share that **MahameruJS** has moved into its own dedicated scope and organization on both GitHub and npm. As part of this transition, **this package has now been consolidated into a single monorepo**. This change allows us to manage everything efficiently, keeping our entire ecosystem structured, interconnected, and neatly organized within a unified repository layout.
 
-> **Note:** Since the API is highly unstable, syntax may change across minor releases.
+---
 
-### Installation
+### 📦 New Repository:
+👉 **[github.com/mahamerujs/mahameru](https://github.com/mahamerujs/mahameru)**
 
-```bash
-npm install @mahameru/magma
-# or
-yarn add @mahameru/magma
-# or
-pnpm add @mahameru/magma
-```
+---
 
-### Usage
+### 📥 How to Update Your Local Clone:
+
+If you have already cloned this repository, you can update your local remote URL to point to the new location by running the following command in your terminal:
 
 ```bash
-import { MahameruResponse } from '@mahameru/magma';
-
-const app = new Mahameru();
-
-// Register the magma plugin
-app.use(magma({
-  port: 3000
-}));
-
-app.get('/', (req, res) => {
-  res.send('Hello from Magma! 🌋');
-});
-
-app.start();
+git remote set-url origin https://github.com/mahamerujs/mahameru.git
 ```
 
-## 🗺️ Roadmap & Stability Goals
-[ ] Stabilize core HTTP routing and request context.
-
-[ ] Implement robust error handling and built-in logger integration.
-
-[ ] Add comprehensive middleware support.
-
-[ ] Reconcile and lock the public API for the v1.0.0 stable release.
-
-## 🤝 Contributing
-Since this plugin is in early alpha, we are not accepting major feature requests just yet. However, bug reports and early feedback on the API design are highly welcome! Please open an issue if you encounter any unexpected behavior.
-
-## 📄 License
-MIT © Mahameru Ecosystem
+Thank you so much for your continuous support, and we'll see you over at the new repository! 🙌
